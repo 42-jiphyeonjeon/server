@@ -1,11 +1,12 @@
 docker build -t mariadb-service ./mariadb
-docker build -t web-service ./web
-docker run -d --name mariadb mariadb-service
-docker run -d --name web -p 80:80 web-service
+docker build -t react-service ./react
+docker build -t express-service ./express
 
-git clone https://github.com/42-jiphyeonjeon/frontend ./web/srcs/frontend
-git clone https://github.com/42-jiphyeonjeon/frontend ./web/srcs/backend
+docker run -d --name mariadb mariadb-service
+docker run -d --name react -p 80:80 react-service
+docker run -d --name express express-service
 
 docker network create library
 docker network connect library mariadb
-docker network connect web
+docker network connect library react
+docker network connect library express
